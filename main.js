@@ -21,3 +21,39 @@ classifier=ml5.imageClassifier('https://teachablemachine.withgoogle.com/models/5
 function modelLoaded() {
     console.log("model loaded");
 }
+
+function check() {
+    img=document.getElementById("captured_image");
+    classifier.classify(img,gotResult);
+}
+
+function speak() {
+    var synth=window.speechSynthesis;
+    speak_data="The prediction is "+prediction;
+    var utterThis=new SpeechSynthesisUtterance(speak_data);
+    synth.speak(utterThis)
+    }
+
+    function gotResult(error, results) {
+        if (error) {
+            console.log(error);
+        }
+        else{
+            console.log(results);
+            document.getElementById("results_emotion_name").innerHTML=results[0].label;
+            prediction=results[0].label;
+            speak();
+    if (results[0].label=="Ok sign"){
+        document.getElementById("update_emoji").innerHTML="&#128076;";
+    }
+    if (results[0].label=="Thumbs Up"){
+        document.getElementById("update_emoji").innerHTML="&#9996;";
+    }
+    if (results[0].label=="Peace Sign"){
+        document.getElementById("update_emoji").innerHTML="&#128077;";
+    }
+
+    
+    
+        }
+    }
